@@ -38,9 +38,16 @@ const typeDefs = gql`
     pricesHistory: [PriceHistory]!
   }
 
+  input PaginationInput {
+    index: Int!
+    size: Int!
+  }
+
   type Query {
     colors: [Color]!
     engineVolumes: [EngineVolume]!
+    modelsCount: Int!
+    models(vendorId: Int!, pagination: PaginationInput): [Model]!
   }
 `;
 

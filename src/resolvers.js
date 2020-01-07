@@ -5,6 +5,12 @@ const resolvers = {
     },
     async engineVolumes(_, __, { dataSources }) {
       return await dataSources.engineVolumesSource.getEngineVolumes();
+    },
+    async modelsCount(_, __, { dataSources }) {
+      return await dataSources.modelsSource.getModelsCount();
+    },
+    async models(_, { vendorId, pagination }, { dataSources }) {
+      return await dataSources.modelsSource.getModels(vendorId, pagination);
     }
   }
 };
