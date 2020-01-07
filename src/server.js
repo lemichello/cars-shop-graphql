@@ -1,9 +1,12 @@
 const { ApolloServer } = require('apollo-server');
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
+
+/* Data Sources */
 let ColorsDataSource = require('./resources/colorsDataSource');
 let EngineVolumesDataSource = require('./resources/engineVolumesDataSource');
 let ModelsDataSource = require('./resources/modelsDataSource');
+let CarsDataSource = require('./resources/carsDataSource');
 
 const server = new ApolloServer({
   typeDefs,
@@ -12,7 +15,8 @@ const server = new ApolloServer({
     return {
       colorsSource: new ColorsDataSource(),
       engineVolumesSource: new EngineVolumesDataSource(),
-      modelsSource: new ModelsDataSource()
+      modelsSource: new ModelsDataSource(),
+      carsSource: new CarsDataSource()
     };
   }
 });

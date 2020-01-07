@@ -11,6 +11,24 @@ const resolvers = {
     },
     async models(_, { vendorId, pagination }, { dataSources }) {
       return await dataSources.modelsSource.getModels(vendorId, pagination);
+    },
+    async carsCount(_, __, { dataSources }) {
+      return await dataSources.carsSource.getCarsCount();
+    },
+    async minMaxPrices(_, __, { dataSources }) {
+      return await dataSources.carsSource.getMinMaxPrices();
+    },
+    async cars(_, { filter, pagination }, { dataSources }) {
+      if (filter) {
+        return await dataSources.carsSource.getFilteredCars(filter, pagination);
+      }
+
+      return await dataSources.carsSource.getCars(pagination);
+    }
+  },
+  Car: {
+    price(car) {
+      return car.pricesHistory[car.pricesHistory.length - 1].price;
     }
   }
 };
