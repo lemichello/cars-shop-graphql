@@ -10,6 +10,14 @@ class EngineVolumesDataSource extends RESTDataSource {
   async getEngineVolumes() {
     return await this.get(`enginevolumes`);
   }
+
+  async addEngineVolume(engineVolume) {
+    try {
+      await this.post('enginevolumes', { ...engineVolume });
+    } catch (e) {
+      throw e;
+    }
+  }
 }
 
 module.exports = EngineVolumesDataSource;

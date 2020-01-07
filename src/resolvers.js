@@ -30,6 +30,10 @@ const resolvers = {
     async createColor(_, { input }, { dataSources }) {
       await dataSources.colorsSource.addColor(input);
       return true;
+    },
+    async createEngineVolume(_, { input }, { dataSources }) {
+      await dataSources.engineVolumesSource.addEngineVolume(input);
+      return true;
     }
   },
   Car: {

@@ -71,8 +71,13 @@ const typeDefs = gql`
     name: String!
   }
 
+  input NewEngineVolume {
+    volume: Float!
+  }
+
   type Mutation {
     createColor(input: NewColorInput!): Boolean
+    createEngineVolume(input: NewEngineVolume!): Boolean
   }
 `;
 
