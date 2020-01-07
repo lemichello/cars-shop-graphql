@@ -66,6 +66,14 @@ const typeDefs = gql`
     cars(filter: CarsFilterInput, pagination: PaginationInput): [Car]!
     minMaxPrices: [Float]!
   }
+
+  input NewColorInput {
+    name: String!
+  }
+
+  type Mutation {
+    createColor(input: NewColorInput!): Boolean
+  }
 `;
 
 module.exports = typeDefs;

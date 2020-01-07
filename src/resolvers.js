@@ -26,6 +26,12 @@ const resolvers = {
       return await dataSources.carsSource.getCars(pagination);
     }
   },
+  Mutation: {
+    async createColor(_, { input }, { dataSources }) {
+      await dataSources.colorsSource.addColor(input);
+      return true;
+    }
+  },
   Car: {
     price(car) {
       return car.pricesHistory[car.pricesHistory.length - 1].price;

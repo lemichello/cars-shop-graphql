@@ -10,6 +10,14 @@ class ColorsDataSource extends RESTDataSource {
   async getColors() {
     return await this.get(`colors`);
   }
+
+  async addColor(color) {
+    try {
+      await this.post('colors', { ...color });
+    } catch (e) {
+      throw e;
+    }
+  }
 }
 
 module.exports = ColorsDataSource;
