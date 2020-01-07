@@ -64,6 +64,8 @@ const typeDefs = gql`
     models(vendorId: Int!, pagination: PaginationInput): [Model]!
     carsCount: Int!
     cars(filter: CarsFilterInput, pagination: PaginationInput): [Car]!
+    vendorsCount: Int!
+    vendors(pagination: PaginationInput): [Vendor]!
     minMaxPrices: [Float]!
   }
 
@@ -75,9 +77,14 @@ const typeDefs = gql`
     volume: Float!
   }
 
+  input NewVendor {
+    name: String!
+  }
+
   type Mutation {
     createColor(input: NewColorInput!): Boolean
     createEngineVolume(input: NewEngineVolume!): Boolean
+    createVendor(input: NewVendor!): Boolean
   }
 `;
 

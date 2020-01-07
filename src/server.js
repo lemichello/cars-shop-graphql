@@ -7,6 +7,7 @@ let ColorsDataSource = require('./resources/colorsDataSource');
 let EngineVolumesDataSource = require('./resources/engineVolumesDataSource');
 let ModelsDataSource = require('./resources/modelsDataSource');
 let CarsDataSource = require('./resources/carsDataSource');
+let VendorsDataSource = require('./resources/vendorsDataSource');
 
 const server = new ApolloServer({
   typeDefs,
@@ -16,7 +17,8 @@ const server = new ApolloServer({
       colorsSource: new ColorsDataSource(),
       engineVolumesSource: new EngineVolumesDataSource(),
       modelsSource: new ModelsDataSource(),
-      carsSource: new CarsDataSource()
+      carsSource: new CarsDataSource(),
+      vendorsSource: new VendorsDataSource()
     };
   }
 });

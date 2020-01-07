@@ -24,6 +24,12 @@ const resolvers = {
       }
 
       return await dataSources.carsSource.getCars(pagination);
+    },
+    async vendorsCount(_, __, { dataSources }) {
+      return await dataSources.vendorsSource.getVendorsCount();
+    },
+    async vendors(_, { pagination }, { dataSources }) {
+      return await dataSources.vendorsSource.getVendors(pagination);
     }
   },
   Mutation: {
@@ -33,6 +39,10 @@ const resolvers = {
     },
     async createEngineVolume(_, { input }, { dataSources }) {
       await dataSources.engineVolumesSource.addEngineVolume(input);
+      return true;
+    },
+    async createVendor(_, { input }, { dataSources }) {
+      await dataSources.vendorsSource.addVendor(input);
       return true;
     }
   },
