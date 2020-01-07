@@ -1,15 +1,15 @@
 const { RESTDataSource } = require('apollo-datasource-rest');
 const config = require('../config/index');
 
-class ColorsDataSource extends RESTDataSource {
+class EngineVolumesDataSource extends RESTDataSource {
   constructor() {
     super();
     this.baseURL = config.apiUrl;
   }
 
-  async getColors() {
-    return await this.get(`colors`);
+  async getEngineVolumes() {
+    return await this.get(`enginevolumes`);
   }
 }
 
-module.exports = ColorsDataSource;
+module.exports = EngineVolumesDataSource;

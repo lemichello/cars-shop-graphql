@@ -40,6 +40,7 @@ const typeDefs = gql`
 
   type Query {
     colors: [Color]!
+    engineVolumes: [EngineVolume]!
   }
 `;
 
