@@ -86,11 +86,22 @@ const typeDefs = gql`
     vendorId: Int!
   }
 
+  input NewCar {
+    id: Int!
+    description: String!
+    modelId: Int!
+    colorId: Int!
+    engineVolumeId: Int!
+    price: Float!
+  }
+
   type Mutation {
-    createColor(input: NewColorInput!): Boolean
-    createEngineVolume(input: NewEngineVolume!): Boolean
-    createVendor(input: NewVendor!): Boolean
-    createModel(input: NewModel!): Boolean
+    addColor(input: NewColorInput!): Boolean
+    addEngineVolume(input: NewEngineVolume!): Boolean
+    addVendor(input: NewVendor!): Boolean
+    addModel(input: NewModel!): Boolean
+    addCar(input: NewCar!): Boolean
+    updateCar(input: NewCar!): Boolean
   }
 `;
 

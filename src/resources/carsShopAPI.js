@@ -29,6 +29,22 @@ class CarsShopAPI extends RESTDataSource {
     return await this.post(`cars/filtered`, { ...filter });
   }
 
+  async addCar(car) {
+    try {
+      await this.post('cars', { ...car });
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  async updateCar(car) {
+    try {
+      await this.put(`cars/${car.id}`, { ...car });
+    } catch (e) {
+      throw e;
+    }
+  }
+
   async getColors() {
     return await this.get(`colors`);
   }
