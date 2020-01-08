@@ -22,10 +22,11 @@ class CarsShopAPI extends RESTDataSource {
   async getFilteredCars(filter, pagination) {
     if (pagination) {
       return await this.post(
-        `cars/filtered?index=${pagination.index}&size=${pagination.size}`
+        `cars/filtered?index=${pagination.index}&size=${pagination.size}`,
+        { ...filter }
       );
     }
-    return await this.post(`cars/filtered`, filter);
+    return await this.post(`cars/filtered`, { ...filter });
   }
 
   async getColors() {
