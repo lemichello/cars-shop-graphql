@@ -47,6 +47,10 @@ const resolvers = {
     async createVendor(_, { input }, { dataSources }) {
       await dataSources.carsShopAPI.addVendor(input);
       return true;
+    },
+    async createModel(_, { input }, { dataSources }) {
+      await dataSources.carsShopAPI.addModel(input);
+      return true;
     }
   },
   Car: {

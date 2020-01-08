@@ -81,10 +81,16 @@ const typeDefs = gql`
     name: String!
   }
 
+  input NewModel {
+    name: String!
+    vendorId: Int!
+  }
+
   type Mutation {
     createColor(input: NewColorInput!): Boolean
     createEngineVolume(input: NewEngineVolume!): Boolean
     createVendor(input: NewVendor!): Boolean
+    createModel(input: NewModel!): Boolean
   }
 `;
 
