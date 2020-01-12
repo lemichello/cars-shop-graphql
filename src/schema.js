@@ -24,6 +24,7 @@ const typeDefs = gql`
   }
 
   type PriceHistory {
+    id: Int!
     price: Float!
     date: String!
   }
@@ -64,6 +65,7 @@ const typeDefs = gql`
     models(vendorId: Int!, pagination: PaginationInput): [Model]!
     carsCount: Int!
     cars(filter: CarsFilterInput, pagination: PaginationInput): [Car]!
+    car(id: Int!): Car
     vendorsCount: Int!
     vendors(pagination: PaginationInput): [Vendor]!
     minMaxPrices: [Float]!

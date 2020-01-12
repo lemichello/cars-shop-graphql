@@ -28,6 +28,9 @@ const resolvers = {
 
       return await dataSources.carsShopAPI.getCars(pagination);
     },
+    async car(_, { id }, { dataSources }) {
+      return await dataSources.carsShopAPI.getCarById(id);
+    },
     async vendorsCount(_, __, { dataSources }) {
       return await dataSources.carsShopAPI.getVendorsCount();
     },
