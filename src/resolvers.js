@@ -40,28 +40,22 @@ const resolvers = {
   },
   Mutation: {
     async addColor(_, { input }, { dataSources }) {
-      await dataSources.carsShopAPI.addColor(input);
-      return true;
+      return await dataSources.carsShopAPI.addColor(input);
     },
     async addEngineVolume(_, { input }, { dataSources }) {
-      await dataSources.carsShopAPI.addEngineVolume(input);
-      return true;
+      return await dataSources.carsShopAPI.addEngineVolume(input);
     },
     async addVendor(_, { input }, { dataSources }) {
-      await dataSources.carsShopAPI.addVendor(input);
-      return true;
+      return await dataSources.carsShopAPI.addVendor(input);
     },
     async addModel(_, { input }, { dataSources }) {
-      await dataSources.carsShopAPI.addModel(input);
-      return true;
+      return await dataSources.carsShopAPI.addModel(input);
     },
     async addCar(_, { input }, { dataSources }) {
-      await dataSources.carsShopAPI.addCar(input);
-      return true;
+      return await dataSources.carsShopAPI.addCar(input);
     },
     async updateCar(_, { input }, { dataSources }) {
-      await dataSources.carsShopAPI.updateCar(input);
-      return true;
+      return await dataSources.carsShopAPI.updateCar(input);
     }
   },
   Car: {

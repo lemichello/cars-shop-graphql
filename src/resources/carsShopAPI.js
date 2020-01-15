@@ -35,7 +35,7 @@ class CarsShopAPI extends RESTDataSource {
 
   async addCar(car) {
     try {
-      await this.post('cars', { ...car });
+      return await this.post('cars', { ...car });
     } catch (e) {
       throw e;
     }
@@ -43,7 +43,7 @@ class CarsShopAPI extends RESTDataSource {
 
   async updateCar(car) {
     try {
-      await this.put(`cars/${car.id}`, { ...car });
+      return await this.put(`cars/${car.id}`, { ...car });
     } catch (e) {
       throw e;
     }
@@ -55,7 +55,7 @@ class CarsShopAPI extends RESTDataSource {
 
   async addColor(color) {
     try {
-      await this.post('colors', { ...color });
+      return await this.post('colors', { ...color });
     } catch (e) {
       throw e;
     }
@@ -67,7 +67,7 @@ class CarsShopAPI extends RESTDataSource {
 
   async addEngineVolume(engineVolume) {
     try {
-      await this.post('enginevolumes', { ...engineVolume });
+      return await this.post('enginevolumes', { ...engineVolume });
     } catch (e) {
       throw e;
     }
@@ -83,7 +83,7 @@ class CarsShopAPI extends RESTDataSource {
 
   async addModel(model) {
     try {
-      await this.post('models', { ...model });
+      return await this.post('models', { ...model });
     } catch (e) {
       throw e;
     }
@@ -99,7 +99,7 @@ class CarsShopAPI extends RESTDataSource {
 
   async addVendor(vendor) {
     try {
-      await this.post('vendors', { ...vendor });
+      return await this.post('vendors', { ...vendor });
     } catch (e) {
       throw e;
     }

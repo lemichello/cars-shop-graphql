@@ -98,12 +98,12 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    addColor(input: NewColorInput!): Boolean
-    addEngineVolume(input: NewEngineVolume!): Boolean
-    addVendor(input: NewVendor!): Boolean
-    addModel(input: NewModel!): Boolean
-    addCar(input: NewCar!): Boolean
-    updateCar(input: NewCar!): Boolean
+    addColor(input: NewColorInput!): Color!
+    addEngineVolume(input: NewEngineVolume!): EngineVolume!
+    addVendor(input: NewVendor!): Vendor!
+    addModel(input: NewModel!): Model!
+    addCar(input: NewCar!): Car!
+    updateCar(input: NewCar!): Car!
   }
 `;
 
