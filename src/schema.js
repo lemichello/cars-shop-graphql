@@ -1,110 +1,66 @@
-const { gql } = require('apollo-server');
+const { merge } = require('lodash');
+const { makeExecutableSchema } = require('graphql-tools');
 
-const typeDefs = gql`
-  type Color {
-    id: Int!
-    name: String!
-  }
+/* Types */
+const { typedef: Color, resolvers: colorResolvers } = require('./types/color');
+const {
+  typedef: EngineVolume,
+  resolvers: engineVolumeResolvers
+} = require('./types/engineVolume');
+const { typedef: Model, resolvers: modelResolvers } = require('./types/model');
+const {
+  typedef: Vendor,
+  resolvers: vendorResolvers
+} = require('./types/vendor');
+const { typedef: PriceHistory } = require('./types/priceHistory');
+const { typedef: Car, resolvers: carResolvers } = require('./types/car');
 
-  type EngineVolume {
-    id: Int!
-    volume: Float!
-  }
+/* Inputs */
+const { typedef: CarsFilterInput } = require('./inputs/carsFilter');
+const { typedef: NewCarInput } = require('./inputs/newCar');
+const { typedef: NewColorInput } = require('./inputs/newColor');
+const { typedef: NewEngineVolumeInput } = require('./inputs/newEngineVolume');
+const { typedef: NewModelInput } = require('./inputs/newModel');
+const { typedef: NewVendorInput } = require('./inputs/newVendor');
+const { typedef: PaginationInput } = require('./inputs/pagination');
+const { typedef: PriceFilterInput } = require('./inputs/priceFilter');
 
-  type Model {
-    id: Int!
-    name: String!
-    vendorId: Int!
-  }
-
-  type Vendor {
-    id: Int!
-    name: String!
-    models: [Model]!
-  }
-
-  type PriceHistory {
-    id: Int!
-    price: Float!
-    date: String!
-  }
-
-  type Car {
-    id: Int!
-    description: String
-    model: Model!
-    vendor: Vendor!
-    color: Color!
-    engineVolume: EngineVolume!
-    pricesHistory: [PriceHistory]!
-    price: Float!
-  }
-
-  input PaginationInput {
-    index: Int!
-    size: Int!
-  }
-
-  input PriceFilterInput {
-    fromPrice: Float!
-    toPrice: Float!
-    selectedDate: String
-  }
-
-  input CarsFilterInput {
-    modelsId: [Int]!
-    colorId: Int
-    engineVolumeId: Int
-    price: PriceFilterInput
-  }
-
+const schema = `
   type Query {
-    colors: [Color]!
-    engineVolumes: [EngineVolume]!
-    modelsCount: Int!
-    models(vendorId: Int!, pagination: PaginationInput): [Model]!
-    carsCount: Int!
-    cars(filter: CarsFilterInput, pagination: PaginationInput): [Car]!
-    car(id: Int!): Car
-    vendorsCount: Int!
-    vendors(pagination: PaginationInput): [Vendor]!
-    minMaxPrices: [Float]!
-  }
-
-  input NewColorInput {
-    name: String!
-  }
-
-  input NewEngineVolume {
-    volume: Float!
-  }
-
-  input NewVendor {
-    name: String!
-  }
-
-  input NewModel {
-    name: String!
-    vendorId: Int!
-  }
-
-  input NewCar {
-    id: Int!
-    description: String!
-    modelId: Int!
-    colorId: Int!
-    engineVolumeId: Int!
-    price: Float!
+    _empty: String
   }
 
   type Mutation {
-    addColor(input: NewColorInput!): Color!
-    addEngineVolume(input: NewEngineVolume!): EngineVolume!
-    addVendor(input: NewVendor!): Vendor!
-    addModel(input: NewModel!): Model!
-    addCar(input: NewCar!): Car!
-    updateCar(input: NewCar!): Car!
+    _empty: String
   }
 `;
 
-module.exports = typeDefs;
+let executableSchema = makeExecutableSchema({
+  typeDefs: [
+    schema,
+    Color,
+    Model,
+    Vendor,
+    PriceHistory,
+    Car,
+    EngineVolume,
+    CarsFilterInput,
+    NewCarInput,
+    NewColorInput,
+    NewEngineVolumeInput,
+    NewModelInput,
+    NewVendorInput,
+    PaginationInput,
+    PriceFilterInput
+  ],
+
+  resolvers: merge(
+    colorResolvers,
+    engineVolumeResolvers,
+    modelResolvers,
+    vendorResolvers,
+    carResolvers
+  )
+});
+
+module.exports = executableSchema;
