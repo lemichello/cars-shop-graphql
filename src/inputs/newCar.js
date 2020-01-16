@@ -1,7 +1,7 @@
 const typedef = `
   input NewCar {
     id: Int!
-    description: String!
+    description: String
     modelId: Int!
     colorId: Int!
     engineVolumeId: Int!
