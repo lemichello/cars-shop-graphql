@@ -73,8 +73,8 @@ class CarsShopAPI extends RESTDataSource {
     }
   }
 
-  async getModelsCount() {
-    return await this.get(`models/count`);
+  async getModelsCount(vendorId) {
+    return await this.get(`models/count/${vendorId}`);
   }
 
   async getModels(vendorId, pagination) {

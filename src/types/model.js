@@ -6,7 +6,7 @@ const typedef = `
   }
 
   extend type Query {
-    modelsCount: Int!
+    modelsCount(vendorId: Int!): Int!
     models(vendorId: Int!, pagination: PaginationInput): [Model]!
   }
 
@@ -17,8 +17,8 @@ const typedef = `
 
 const resolvers = {
   Query: {
-    async modelsCount(_, __, { dataSources }) {
-      return await dataSources.carsShopAPI.getModelsCount();
+    async modelsCount(_, { vendorId }, { dataSources }) {
+      return await dataSources.carsShopAPI.getModelsCount(vendorId);
     },
     async models(_, { vendorId, pagination }, { dataSources }) {
       return await dataSources.carsShopAPI.getModels(vendorId, pagination);
