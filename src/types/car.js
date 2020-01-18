@@ -11,7 +11,7 @@ const typedef = `
   }
 
   extend type Query {
-    carsCount: Int!
+    carsCount(filter: CarsFilterInput): Int!
     cars(filter: CarsFilterInput, pagination: PaginationInput): [Car]!
     car(id: Int!): Car
     minMaxPrices: [Float]!
@@ -25,8 +25,8 @@ const typedef = `
 
 const resolvers = {
   Query: {
-    async carsCount(_, __, { dataSources }) {
-      return await dataSources.carsShopAPI.getCarsCount();
+    async carsCount(_, { filter }, { dataSources }) {
+      return await dataSources.carsShopAPI.getCarsCount(filter);
     },
     async minMaxPrices(_, __, { dataSources }) {
       return await dataSources.carsShopAPI.getMinMaxPrices();

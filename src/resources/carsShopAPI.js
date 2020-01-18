@@ -7,8 +7,8 @@ class CarsShopAPI extends RESTDataSource {
     this.baseURL = config.apiUrl;
   }
 
-  async getCarsCount() {
-    return await this.get('cars/count');
+  async getCarsCount(filter) {
+    return await this.post('cars/count', { ...filter });
   }
 
   async getMinMaxPrices() {
