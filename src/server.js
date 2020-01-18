@@ -10,7 +10,8 @@ const server = new ApolloServer({
     return {
       carsShopAPI: new CarsShopAPI()
     };
-  }
+  },
+  cors: true
 });
 
 server.listen().then(({ url }) => {
