@@ -1,3 +1,5 @@
+const pubsub = require('../pubsub');
+
 const typedef = `
 	type EngineVolume {
 		id: Int!
@@ -10,7 +12,11 @@ const typedef = `
 
 	extend type Mutation {
 		addEngineVolume(input: NewEngineVolume!): EngineVolume!
-	}
+  }
+  
+  extend type Subscription {
+    engineVolumeAdded: EngineVolume!
+  }
 `;
 
 const resolvers = {
@@ -21,7 +27,16 @@ const resolvers = {
   },
   Mutation: {
     async addEngineVolume(_, { input }, { dataSources }) {
-      return await dataSources.carsShopAPI.addEngineVolume(input);
+      let engineVolume = await dataSources.carsShopAPI.addEngineVolume(input);
+
+      pubsub.publish('engineVolumeAdded', { engineVolumeAdded: engineVolume });
+
+      return engineVolume;
+    }
+  },
+  Subscription: {
+    engineVolumeAdded: {
+      subscribe: () => pubsub.asyncIterator('engineVolumeAdded')
     }
   }
 };

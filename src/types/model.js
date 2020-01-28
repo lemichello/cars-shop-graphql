@@ -1,3 +1,5 @@
+const pubsub = require('../pubsub');
+
 const typedef = `
   type Model {
     id: Int!
@@ -13,6 +15,10 @@ const typedef = `
   extend type Mutation {
     addModel(input: NewModel!): Model!
   }
+
+  extend type Subscription {
+    modelAdded: Model!
+  }
 `;
 
 const resolvers = {
@@ -26,7 +32,16 @@ const resolvers = {
   },
   Mutation: {
     async addModel(_, { input }, { dataSources }) {
-      return await dataSources.carsShopAPI.addModel(input);
+      let model = await dataSources.carsShopAPI.addModel(input);
+
+      pubsub.publish('modelAdded', { modelAdded: model });
+
+      return model;
+    }
+  },
+  Subscription: {
+    modelAdded: {
+      subscribe: () => pubsub.asyncIterator('modelAdded')
     }
   }
 };

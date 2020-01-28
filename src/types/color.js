@@ -1,15 +1,21 @@
+const pubsub = require('../pubsub');
+
 const typedef = `
   type Color {
-      id: Int!
-      name: String!
+    id: Int!
+    name: String!
   }
 
   extend type Query {
-      colors: [Color]!
+    colors: [Color]!
   }
 
   extend type Mutation {
-      addColor(input: NewColorInput!): Color!
+    addColor(input: NewColorInput!): Color!
+  }
+
+  extend type Subscription {
+    colorAdded: Color!
   }
 `;
 
@@ -21,7 +27,16 @@ const resolvers = {
   },
   Mutation: {
     async addColor(_, { input }, { dataSources }) {
-      return await dataSources.carsShopAPI.addColor(input);
+      let color = await dataSources.carsShopAPI.addColor(input);
+
+      pubsub.publish('colorAdded', { colorAdded: color });
+
+      return color;
+    }
+  },
+  Subscription: {
+    colorAdded: {
+      subscribe: () => pubsub.asyncIterator('colorAdded')
     }
   }
 };

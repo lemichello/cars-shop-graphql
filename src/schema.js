@@ -33,6 +33,10 @@ const schema = `
   type Mutation {
     _empty: String
   }
+
+  type Subscription {
+    _empty: String
+  }
 `;
 
 let executableSchema = makeExecutableSchema({
