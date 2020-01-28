@@ -1,5 +1,6 @@
 const { ApolloServer } = require('apollo-server-express');
 const schema = require('./schema');
+const http = require('http');
 var express = require('express');
 var cors = require('cors');
 
@@ -24,6 +25,12 @@ const PORT = process.env.PORT || 4000;
 
 server.applyMiddleware({ app });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}/`);
+const httpServer = http.createServer(app);
+server.installSubscriptionHandlers(httpServer);
+
+httpServer.listen(PORT, () => {
+  console.log(`Server ready at http://localhost:${PORT}${server.graphqlPath}`);
+  console.log(
+    `Subscriptions ready at ws://localhost:${PORT}${server.subscriptionsPath}`
+  );
 });
