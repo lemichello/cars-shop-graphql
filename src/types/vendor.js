@@ -1,3 +1,5 @@
+const pubsub = require('../pubsub');
+
 const typedef = `
   type Vendor {
     id: Int!
@@ -13,6 +15,10 @@ const typedef = `
   extend type Mutation {
     addVendor(input: NewVendor!): Vendor!
   }
+
+  extend type Subscription {
+    vendorAdded: Vendor!
+  }
 `;
 
 const resolvers = {
@@ -26,7 +32,16 @@ const resolvers = {
   },
   Mutation: {
     async addVendor(_, { input }, { dataSources }) {
-      return await dataSources.carsShopAPI.addVendor(input);
+      let vendor = await dataSources.carsShopAPI.addVendor(input);
+
+      pubsub.publish('vendorAdded', { vendorAdded: vendor });
+
+      return vendor;
+    }
+  },
+  Subscription: {
+    vendorAdded: {
+      subscribe: () => pubsub.asyncIterator('vendorAdded')
     }
   }
 };

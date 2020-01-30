@@ -97,6 +97,10 @@ class CarsShopAPI extends RESTDataSource {
     return await this.get('vendors', pagination);
   }
 
+  async getVendorById(vendorId) {
+    return await this.get(`vendors/${vendorId}`);
+  }
+
   async addVendor(vendor) {
     try {
       return await this.post('vendors', { ...vendor });
