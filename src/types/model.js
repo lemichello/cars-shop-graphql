@@ -15,10 +15,6 @@ const typedef = `
   extend type Mutation {
     addModel(input: NewModel!): Model!
   }
-
-  extend type Subscription {
-    modelAdded: Model!
-  }
 `;
 
 const resolvers = {
@@ -33,15 +29,11 @@ const resolvers = {
   Mutation: {
     async addModel(_, { input }, { dataSources }) {
       let model = await dataSources.carsShopAPI.addModel(input);
+      let vendor = await dataSources.carsShopAPI.getVendorById(input.vendorId);
 
-      pubsub.publish('modelAdded', { modelAdded: model });
+      pubsub.publish('vendorAdded', { vendorAdded: vendor });
 
       return model;
-    }
-  },
-  Subscription: {
-    modelAdded: {
-      subscribe: () => pubsub.asyncIterator('modelAdded')
     }
   }
 };
