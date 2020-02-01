@@ -14,6 +14,7 @@ const {
 } = require('./types/vendor');
 const { typedef: PriceHistory } = require('./types/priceHistory');
 const { typedef: Car, resolvers: carResolvers } = require('./types/car');
+const { typedef: MinMaxPrice } = require('./types/minMaxPrice');
 
 /* Inputs */
 const { typedef: CarsFilterInput } = require('./inputs/carsFilter');
@@ -48,6 +49,7 @@ let executableSchema = makeExecutableSchema({
     PriceHistory,
     Car,
     EngineVolume,
+    MinMaxPrice,
     CarsFilterInput,
     NewCarInput,
     NewColorInput,

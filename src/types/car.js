@@ -1,3 +1,5 @@
+const pubsub = require('../pubsub');
+
 const typedef = `
   type Car {
     id: Int!
@@ -14,12 +16,16 @@ const typedef = `
     carsCount(filter: CarsFilterInput): Int!
     cars(filter: CarsFilterInput, pagination: PaginationInput): [Car]!
     car(id: Int!): Car
-    minMaxPrices: [Float]!
+    minMaxPrices: MinMaxPrice!
   }
   
   extend type Mutation {
     addCar(input: NewCar!): Car!
     updateCar(input: NewCar!): Car!
+  }
+  
+  extend type Subscription {
+    minMaxPricesChanged: MinMaxPrice!
   }
 `;
 
@@ -29,7 +35,9 @@ const resolvers = {
       return await dataSources.carsShopAPI.getCarsCount(filter);
     },
     async minMaxPrices(_, __, { dataSources }) {
-      return await dataSources.carsShopAPI.getMinMaxPrices();
+      const prices = await dataSources.carsShopAPI.getMinMaxPrices();
+
+      return { minPrice: prices[0], maxPrice: prices[1] };
     },
     async cars(_, { filter, pagination }, { dataSources }) {
       if (filter) {
@@ -47,10 +55,35 @@ const resolvers = {
   },
   Mutation: {
     async addCar(_, { input }, { dataSources }) {
-      return await dataSources.carsShopAPI.addCar(input);
+      let car = await dataSources.carsShopAPI.addCar(input);
+      const newMinMaxPrices = await dataSources.carsShopAPI.getMinMaxPrices();
+
+      await pubsub.publish('minMaxPricesChanged', {
+        minMaxPricesChanged: {
+          minPrice: newMinMaxPrices[0],
+          maxPrice: newMinMaxPrices[1]
+        }
+      });
+
+      return car;
     },
     async updateCar(_, { input }, { dataSources }) {
-      return await dataSources.carsShopAPI.updateCar(input);
+      let car = await dataSources.carsShopAPI.updateCar(input);
+      const newMinMaxPrices = await dataSources.carsShopAPI.getMinMaxPrices();
+
+      await pubsub.publish('minMaxPricesChanged', {
+        minMaxPricesChanged: {
+          minPrice: newMinMaxPrices[0],
+          maxPrice: newMinMaxPrices[1]
+        }
+      });
+
+      return car;
+    }
+  },
+  Subscription: {
+    minMaxPricesChanged: {
+      subscribe: () => pubsub.asyncIterator('minMaxPricesChanged')
     }
   },
   Car: {
