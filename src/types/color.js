@@ -29,7 +29,7 @@ const resolvers = {
     async addColor(_, { input }, { dataSources }) {
       let color = await dataSources.carsShopAPI.addColor(input);
 
-      pubsub.publish('colorAdded', { colorAdded: color });
+      await pubsub.publish('colorAdded', { colorAdded: color });
 
       return color;
     }

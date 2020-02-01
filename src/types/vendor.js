@@ -34,7 +34,7 @@ const resolvers = {
     async addVendor(_, { input }, { dataSources }) {
       let vendor = await dataSources.carsShopAPI.addVendor(input);
 
-      pubsub.publish('vendorAdded', { vendorAdded: vendor });
+      await pubsub.publish('vendorAdded', { vendorAdded: vendor });
 
       return vendor;
     }

@@ -31,7 +31,7 @@ const resolvers = {
       let model = await dataSources.carsShopAPI.addModel(input);
       let vendor = await dataSources.carsShopAPI.getVendorById(input.vendorId);
 
-      pubsub.publish('vendorAdded', { vendorAdded: vendor });
+      await pubsub.publish('vendorAdded', { vendorAdded: vendor });
 
       return model;
     }

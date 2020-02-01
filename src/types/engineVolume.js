@@ -29,7 +29,9 @@ const resolvers = {
     async addEngineVolume(_, { input }, { dataSources }) {
       let engineVolume = await dataSources.carsShopAPI.addEngineVolume(input);
 
-      pubsub.publish('engineVolumeAdded', { engineVolumeAdded: engineVolume });
+      await pubsub.publish('engineVolumeAdded', {
+        engineVolumeAdded: engineVolume
+      });
 
       return engineVolume;
     }
