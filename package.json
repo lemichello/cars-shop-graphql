@@ -22,5 +22,8 @@
     "graphql-tools": "^4.0.6",
     "lodash": "^4.17.15",
     "subscriptions-transport-ws": "^0.9.16"
+  },
+  "engines": {
+    "node": "12.x"
   }
 }
